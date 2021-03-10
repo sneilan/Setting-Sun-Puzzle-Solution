@@ -1,5 +1,9 @@
+Compile with
+g++ -c *cpp
+g++ -o settingsun *o
 
-
+Run with
+./settingsun
 
 This program computes all the possible states to the setting sun puzzle.
 
