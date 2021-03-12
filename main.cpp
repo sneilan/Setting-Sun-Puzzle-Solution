@@ -1,5 +1,12 @@
 #include "includes.h"
 #include "Test.h"
+#include <fstream>
+#include <stdio.h>
+#include <string>
+
+
+using namespace std;
+
 
 int main() {
     if (!test()) {
@@ -11,6 +18,9 @@ int main() {
 
     State * initialState = createInitialState();
     StateMiner stateMiner;
+
+    ofstream output;
+    output.open("output.txt");
 
     // retrieve initial list of states
     vector<State *> stateList = stateMiner.getNewStates(initialState); // stateList contains a list of the current states we haven't checked yet
@@ -33,11 +43,19 @@ int main() {
             // add all the new states to the end of the vector
             for (int j = 0; j < newStates.size(); j++) {
                 stateList.push_back(newStates[j]);
+		char buffer [50];
+		sprintf(buffer, "%lu ->  %lu;\n", stateList[i]->getHash(), newStates[j]->getHash());
+		output << buffer;
+		output.flush();
             }
         }
         // pop off old states from the list
         stateList.erase(stateList.begin(), stateList.begin()+count);
     }
+
+    output.close();
+
+    cout << "meow\n";
 
     return 0;
 }
